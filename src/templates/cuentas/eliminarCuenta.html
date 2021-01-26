@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extrahead %}
+<style>
+    .boton{
+        margin-right: 100px;
+    }
+    
+    .mensaje{
+        margin-top: 40px;
+    }
+</style>
+{% endblock %}
+{% block title %}Eliminar Cuenta{% endblock %}
+{% block content %}
+<div class="col offset-md-5">   
+    <div class="row">
+        {% if object.icono %}
+            <img src="{{ object.icono.url }}" class = "rounded" width = "300" height = "300">
+        {% else %}
+            <img src="{% static 'images/cuentaIcono.png' %}"  class = "rounded" width="300" height="300">
+        {% endif %}
+    </div>
+    <div class="row">
+        <form method="POST">{% csrf_token %}
+            <div class="alert alert-warning mensaje" role="alert">
+                Desea eliminar la cuenta "{{ object.nombre }}"?
+            </div>
+            <button class="btn btn-danger boton" type="submit">Eliminar</button>
+            <a class="btn btn-primary" href="{% url 'usuario:cuentaInicio' %}">Cancelar</a>
+        </form>
+    </div>
+</div>
+<br><br><br><br><br><br><br>
+{% endblock %}

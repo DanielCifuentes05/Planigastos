@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block extrahead %}
+<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet"
+  type="text/css">
+
+<!-- Custom styles for this template -->
+
+<style>
+  body {
+    font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 700;
+  }
+
+  header.masthead {
+    position: relative;
+    background-color: #343a40; 
+    background: url("{% static 'images/fondoIndice.jpg' %}") no-repeat center center; 
+    background-size: cover;
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+  }
+
+  header.masthead .overlay {
+    position: absolute;
+    background-color: #212529;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0.3;
+  }
+
+  header.masthead h1 {
+    font-size: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    header.masthead {
+      padding-top: 12rem;
+      padding-bottom: 12rem;
+    }
+
+    header.masthead h1 {
+      font-size: 3rem;
+    }
+  }
+
+  .showcase .showcase-text {
+    padding: 3rem;
+  }
+
+  .showcase .showcase-img {
+    min-height: 30rem;
+    background-size: cover;
+  }
+
+  @media (min-width: 768px) {
+    .showcase .showcase-text {
+      padding: 7rem;
+    }
+  }
+
+  .features-icons {
+  padding-top: 7rem;
+  padding-bottom: 7rem;
+}
+
+.features-icons .features-icons-item {
+  max-width: 20rem;
+}
+
+.features-icons .features-icons-item .features-icons-icon {
+  height: 7rem;
+}
+
+.features-icons .features-icons-item .features-icons-icon i {
+  font-size: 4.5rem;
+}
+
+.features-icons .features-icons-item:hover .features-icons-icon i {
+  font-size: 5rem;
+}
+
+</style>
+
+{% endblock %}
+{% block title %}Planigastos{% endblock %}
+{% block navbar %}{% endblock %}
+<!-- Masthead -->
+{% block header %}
+<header class="masthead text-white text-center">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-9 mx-auto">
+        <h1 class="mb-5">Bienvenido a Planigastos, aqui podrás administrar tus cuentas de dinero</h1>
+      </div>
+    </div>
+    <div class="row">
+
+      <!-- <div class="form-row">
+                <div class="col-12 col-md-9 mb-2 mb-md-0">
+                  <input type="email" class="form-control form-control-lg" placeholder="Enter your email...">
+                </div> -->
+
+      <div class="col-12 col-md-3 offset-md-3">
+        <a class="btn btn-block btn-lg btn-success" href="{% url 'usuario:signup' %}">Regístrate</a>
+      </div>
+
+
+
+
+      <div class="col-12 col-md-3">
+        <a class="btn btn-block btn-lg btn-primary" href="{% url 'usuario:login' %}">Inicia Sesión</a>
+      </div>
+    </div>
+  </div>
+</header>
+{% endblock %}
+{% block content %}
+<!-- Icons Grid -->
+<section class="features-icons bg-light text-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+
+            <img src = "{% static 'images/iconPC.png' %}" width = "200" height = "200">
+       
+          <h3>No más enredos en hojas</h3>
+          <p class="lead mb-0">
+            Evita agendas y cuadernos para manejar tus gastos, con planigastos podrás realizarlo de manera sencilla
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+
+            <img src = "{% static 'images/infiniteIcon.png' %}" width = "200" height = "200">
+         
+          <h3>Número Ilimitado de Cuentas</h3>
+          <p class="lead mb-0">No te preocupes si tienes muchas cuentas, puedes crear un número ilimitado</p>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="features-icons-item mx-auto mb-0 mb-lg-3">
+          
+            <img src = "{% static 'images/iconCheck.png' %}" width = "200" height = "200">
+          
+          <h3>Fácil de Usar</h3>
+          <p class="lead mb-0">Luego de crear un usuario, podrás empezar a disfrutar de planigastos</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Bootstrap core JavaScript -->
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+{% endblock %}
+
+</html>

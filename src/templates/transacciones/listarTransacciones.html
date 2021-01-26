@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extrahead %}
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<script type="text/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+<style>
+    .space-top {
+        margin-top: 70px;
+    }
+</style>
+{% endblock %}
+{% block title %}Listar Transacciones{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col offset-md-1">
+        <a type="button" class="btn btn-success" href="{% url 'cuentas:verCuenta' pk=cuenta %}">Volver</a>
+    </div>
+    <div class="col">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Listar por
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item"
+                    href="{% url 'transacciones:listarTransaccionesOrden' cuenta=cuenta orden='fechaReciente' %}">
+                    Fecha más reciente
+                </a>
+                <a class="dropdown-item"
+                    href="{% url 'transacciones:listarTransaccionesOrden' cuenta=cuenta orden='fechaAntigua' %}">
+                    Fecha más antigua
+                </a>
+                <a class="dropdown-item"
+                    href="{% url 'transacciones:listarTransaccionesOrden' cuenta=cuenta orden='valorAlto' %}">
+                    Valor más alto
+                </a>
+                <a class="dropdown-item"
+                    href="{% url 'transacciones:listarTransaccionesOrden' cuenta=cuenta orden='valorBajo' %}">Valor
+                    más bajo
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% if object_list %}
+{% for item in object_list %}
+<div class="container">
+    <div class="row space-top">
+        {% if item.icono %}
+        <img src="{{ item.icono.url }}" class="rounded" width="70" height="70">
+        {% else %}
+        <img src="{% static 'images/transaccionIcono.png' %}" class="rounded" width="70" height="70">
+        {% endif %}
+        <div class="col-sm-6">
+            <h4>
+                {{ item.nombre }}
+            </h4>
+            {% if item.tipoTransaccion == 1 %}
+            <i>Ingreso de {{ item.valor }} {{ item.tipo_moneda }} realizado en la fecha: {{ item.fecha }}</i><br>
+            <i>Descripción: {{ item.descripcion }}</i>
+            {% else %}
+            <i>Gasto de {{ item.valor }} {{ item.tipo_moneda }} realizado en la fecha: {{ item.fecha }}</i><br>
+            <i>Descripción: {{ item.descripcion }}</i>
+            {% endif %}
+        </div>
+        <div class="col offset-md-2">
+            <div class="dropdown">
+                <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Exportar
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a type="button" class="dropdown-item" href="{% url 'transacciones:exportar' pk=item.id %}">
+                        Como CSV
+                    </a>
+                    <a type="button" class="dropdown-item" href="{% url 'transacciones:exportarPDF' pk=item.id %}">
+                        Como PDF
+                    </a>
+                </div>
+            </div>
+            
+            <!-- <a type="button" class="btn btn-success" href="{% url 'transacciones:exportar' pk=item.id %}">
+                Exportar
+            </a>
+            <a type="button" class="btn btn-success" href="{% url 'transacciones:exportarPDF' pk=item.id %}">
+                    ExportarPDF
+                </a> -->
+        </div>
+        <div class = "col">
+                <a type="button" class="btn btn-danger" href="{% url 'transacciones:eliminarTransaccion' pk=item.id %}">
+                        Eliminar
+                    </a>
+        </div>
+    </div>
+</div>
+
+
+
+{% endfor %}
+
+{% else %}
+<h1>No existen registros de transacciones</h1>
+{% endif %}
+
+<ul class="pager">
+    <li>
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+        {% endif %}
+    </li>
+    <li>
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+        {% endif %}
+    </li>
+</ul>
+{% endblock %}

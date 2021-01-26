@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block extrahead %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<style>
+    .imagen {
+        background-image: url("{% static 'images/perfilVer.jpg' %}");
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background-repeat: no-repeat;
+        height: 92VH;
+        background-size: cover;
+    }
+
+    .marginb {
+        margin-bottom: 4%;
+    }
+
+    .paddt {
+        margin-bottom: 10%;
+    }
+</style>
+{% endblock %}
+{% block title %}Perfil{% endblock %}
+
+{% block content %}
+
+<div class="imagen">
+    <!-- <div class="p paddt"></div> -->
+    <div class="card align-self-center" >
+        <div class="row justify-content-md-center marginb">
+            <p class="h1 text-success">
+                {{ object.usuariodjango.first_name }} {{ object.usuariodjango.last_name }}
+            </p>
+        </div>
+        <div class="row offset-md-1 marginb">
+            <p class="h5 text-primary">
+                Correo electrónico:
+            </p>
+            <p class="h5"> {{ object.usuariodjango.email }}</p>
+        </div>
+        <div class="row offset-md-1 marginb">
+            <p class="h5 text-primary">
+                Nombre de Usuario:
+            </p>
+            <p class="h5">{{ object.usuariodjango.username }}</p>
+        </div>
+        <div class="row offset-md-1 marginb">
+            <p class="h5 text-primary">
+                Cedula:
+            </p>
+            <p class="h5">{{ object.cedula }}</p>
+        </div>
+        <div class="row offset-md-1 marginb">
+            <p class="h5 text-primary">
+                Fecha de Nacimiento:
+            </p>
+            <p class="h5">{{ object.fecha_nacimiento }}</p>
+        </div>
+        <div class="row offset-md-1 marginb">
+            <p class="h5 text-primary">
+                Fecha de Creación de la cuenta:
+            </p>
+            <p class="h5">{{ object.usuariodjango.date_joined }}</p>
+        </div>
+        <div class="row offset-md-1 marginb">
+            <p class="h5 text-primary">
+                Última Conexión:
+            </p>
+            <p class="h5">{{ object.usuariodjango.last_login }}</p>
+        </div>
+
+        <div class="row align-self-center">
+            <div class="dropdown marginb">
+                <button class="btn btn-warning dropdown-toggle " type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Editar Cuenta
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="{% url 'usuario:modificar' pk=object.id%}">Editar Datos</a>
+                    <a class="dropdown-item" href="{% url 'usuario:cambiarPass' %}">Editar Contraseña</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}
+</div>

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extrahead %}
+
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<style>
+    .space-top {
+        margin-top: 70px;
+    }
+</style>
+{% endblock %}
+{% block title %}Listar Tarjetas{% endblock %}
+{% block content %}
+<div class  = "row">
+    <div class = "col offset-md-1">
+        <a type="button" class="btn btn-primary" href="{% url 'cuentas:crearTarjeta' %}">Crear nueva tarjeta</a>
+    </div>
+</div>
+{% if object_list %}
+
+{% for item in object_list %}
+<div class="container">
+    <div class="row space-top">
+            {% if item.cuenta.icono %}
+            <img src="{{ item.cuenta.icono.url }}"  class = "rounded" width="70" height="70">
+        {% else %}
+            <img src="{% static 'images/cardIcon.png' %}"  class = "rounded" width="70" height="70">
+        {% endif %}
+        <div class="col-sm-8">
+            <h4>
+                <a href = "{% url 'cuentas:verTarjeta' item.cuenta.id %}">
+                        {{ item.cuenta.nombre }}
+                </a>
+            </h4>
+            <i>Saldo: {{ item.saldo_inicial }} {{ item.cuenta.tipo_moneda }}</i>
+        </div>
+
+        <div class="col">      
+            <a type="button" class="btn btn-danger" href = "{% url 'cuentas:eliminarTarjeta' item.cuenta.id %}">Eliminar cuenta</a>
+        </div>
+    </div>
+</div>
+
+
+
+{% endfor %}
+
+{% else %}
+<h1>No existen registros de tarjetas</h1>
+{% endif %}
+
+<ul class="pager">
+    <li>
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+        {% endif %}
+    </li>
+    <li>
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+        {% endif %}
+    </li>
+</ul>
+{% endblock %}

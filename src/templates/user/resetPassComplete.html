@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block extrahead %}
+{% load static %}
+<script src="{% static 'js/validacionFormulario.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+<style>
+    .marginb {
+        margin-bottom: 10%;
+    }
+    .hola{
+        height: 80VH;
+    }
+</style>
+{% endblock %}
+{% block title %}Restaurar Contraseña{% endblock %}
+{% block content %}
+<div class = "container hola">
+<div class="row justify-content-md-center marginb">
+    <p class="h1 text-success">Se ha modificado la contraseña</p>
+</div>
+<div class="row align-items-center">
+    <p class="h4">
+        Ya puedes <a href = "{% url 'usuario:login' %}">Iniciar Sesión</a>
+    </p>
+</div>
+</div>
+
+{% endblock %}

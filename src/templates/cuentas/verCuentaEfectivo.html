@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extrahead %}
+<style>
+    .margin-bottom {
+        margin-bottom: 60px;
+    }
+
+    .margin-bottom2 {
+        margin-bottom: 100px;
+    }
+
+    /* body {
+        background-image: url("{% static 'images/cuentaEfectivo.jpg' %}");
+    } */
+
+
+    .btn-primary:hover {
+        color: #FFF;
+        background: rgba(58, 133, 191, 0.75);
+        border: 2px solid rgba(58, 133, 191, 0.75);
+    }
+
+    .btn-warning:hover {
+        color: #FFF;
+        background: rgb(240, 173, 78, 0.75);
+        border: 2px solid rgba(240, 173, 78, 0.75);
+    }
+</style>
+{% endblock %}
+{% block title %}Ver Cuenta{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-5 offset-md-1">
+        <div class="row align-items-start margin-bottom">
+            <div class="col-md-4 offset-md-3">
+                <p class="h1 text-primary">{{ object.nombre }}</p>
+            </div>
+        </div>
+        <div class="row align-items-center margin-bottom">
+            <div class="col-md-4 offset-md-2">
+                {% if object.icono %}
+                <img src="{{ object.icono.url }}" class="rounded" width="300">
+                {% else %}
+                <img src="{% static 'images/cuentaIcono.png' %}" class="rounded" width="300">
+                {% endif %}
+            </div>
+        </div>
+        <div class="row align-items-end margin-bottom">
+            <div class="col-md-4 offset-md-2">
+                <p class="h5 text-info">Saldo: {{ cuentaEfectivo.saldo_inicial }}</p>
+            </div>
+        </div>
+        <div class="row align-items-end margin-bottom">
+            <div class="col-md-4 offset-md-2">
+                <p class="h6 text-info">La cuenta pertenece a los grupos</p>
+                {% if gruposPertenecientes %}
+                <ul class="list-group list-group-item-primary">
+                    {% for grupo in gruposPertenecientes %}
+                    {{ grupo.nombre }}
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row align-items-end margin-bottom">
+            <div class="col-md-4 offset-md-2">
+                <p class="h6 text-info">La cuenta pertenece a los presupuestos</p>
+                {% if presupuestosPertenecientes %}
+                <ul class="list-group list-group-item-primary">
+                    {% for presupuesto in presupuestosPertenecientes %}
+                    {{ presupuesto.nombre }}
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row align-items-end margin-bottom">
+            <div class="col-md-4 offset-md-3">
+                <a type="button" class="btn btn-warning" href="{% url 'cuentas:editarCuenta' object.id %}">Editar
+                    cuenta</a>
+
+            </div>
+        </div>
+    </div>
+    <div class="col offset-md-1">
+        <div class="row margin-bottom">
+            <div class="col">
+                <p class="h1">Acciones</p>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col align-self-center">
+                <a class="btn btn-primary" href="{% url 'transacciones:listarTransacciones' cuenta=object.id %}">
+                    <p class="text-light inline2">Listar transacciones</p>
+                </a>
+            </div>
+        </div>
+
+        <div class="row  justify-content-center margin-bottom">
+            <div class="col align-self-center">
+                <a type="button" class="btn btn-primary"
+                    href="{% url 'transacciones:agregarTransaccion' cuenta=object.id %}">
+                    <p class="text-light inline2">Agregar Transacción</p>
+                </a>
+            </div>
+        </div>
+        <div class="row justify-content-center margin-bottom">
+            <div class="col align-self-center">
+                <a type="button" class="btn btn-primary" href="{% url 'cuentas:exportarCSV' pk=object.id %}">
+                    Exportar Como CSV
+                </a>
+            </div>
+        </div>
+        <div class="row justify-content-center margin-bottom">
+            <div class="col align-self-center">
+                <a type="button" class="btn btn-primary" href="{% url 'cuentas:exportarPDF' pk=object.id %}">
+                    Exportar Como PDF
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="row justify-content-center margin-bottom">
+        <div class="col align-self-center">
+            <a type="button" class="btn btn-primary" href="#">
+                <p class="text-light inline2">Agregar a un Grupo</p>
+            </a>
+        </div>
+    </div>
+
+    <div class="row justify-content-md-center margin-bottom2">
+        <div class="col align-self-center">
+            <a type="button" class="btn btn-primary">
+                <p class="text-light inline2">Agregar a un Presupuesto</p>
+            </a>
+        </div>
+    </div> -->
+</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Modificar Transaccion{% endblock %}
+{% block content %}
+<div class="row">
+
+        <div class="col-md-4 offset-md-1">
+            <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+    
+                <div class="form-group">
+                        <label>Nombre</label>
+                        <!-- {{ form.first_name }} -->
+                        <input class="form-control" type="text" name="nombre" value="{{ form.nombre.value }}">
+                    </div>
+        
+        
+    
+        
+        
+                    <div class="form-group">
+                        <label for="fecha">Fecha de transaccion</label>
+                        <p>Fecha actual: {{ form.fecha }}</p>
+                        <input class="form-control" type="date" name="fecha" id = "fecha" value = "{{ form.fecha.value }}">
+                    </div>
+        
+        
+                    <div class="form-group">
+                        <label>Tipo de transaccion</label>
+                        <p>
+                            {% if form.tipoTransaccion.value == 1 %}
+                                Ingreso
+                            {% else %}
+                                Gasto
+                            {% endif %}
+                        </p><br>
+                        {{ form.tipoTransaccion }}
+                        <!-- <input class="form-control" type="number" name="cedula"> -->
+                    </div>
+        
+        
+        
+                    <div class="form-group">
+                        <label>Valor</label>
+                        <input class="form-control" type="number" name="valor" value="{{ form.valor.value }}">
+                    </div>
+        
+        
+        
+                    <div class="form-group">
+                        <label>Recibo</label><br>
+                        {% if form.icono.value %}
+                            <img src="{{ form.icono.value.url }}" width="70" height="70">
+                        {% else %}
+                           <img src="{% static 'images/cuentaIcono.png' %}" width="70" height="70">
+                        {% endif %}   
+                        <input  type="file" name="icono" value="{{ form.icono.value }}">
+                    </div>
+    
+                    <div class="form-group">
+                            <label>Descripción</label><br>
+                            <textarea class = "form-control" rows = "3" name="descripcion">
+                                {{ form.descripcion.value }}
+                            </textarea>
+                        </div>
+            
+        
+                    <div class="form-group offset-md-5">
+                        <input type="submit" class="btn btn-primary" value="Aceptar" />
+                    </div>
+    
+            </form>
+        </div>
+    </div>
+</div>
+{% if form.errors %}
+{% for field in form %}
+{% for error in field.errors %}
+{% if error != "Este campo es obligatorio." %}
+<div class="alert alert-danger">
+    <strong>{{ error|escape }}</strong>
+</div>
+{% endif %}
+{% endfor %}
+{% endfor %}
+{% for error in form.non_field_errors %}
+{% if error != "Este campo es obligatorio." %}
+<div class="alert alert-danger">
+    <strong>{{ error|escape }}</strong>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extrahead %}
+<style>
+    .margin-bottom {
+        margin-bottom: 40px;
+    }
+
+    .margin-bottom2 {
+        margin-bottom: 100px;
+    }
+
+    /* body {
+        background-image: url("{% static 'images/cuentaEfectivo.jpg' %}");
+    } */
+
+
+    .btn-primary:hover {
+        color: #FFF;
+        background: rgba(58, 133, 191, 0.75);
+        border: 2px solid rgba(58, 133, 191, 0.75);
+    }
+
+    .btn-warning:hover {
+        color: #FFF;
+        background: rgb(240, 173, 78, 0.75);
+        border: 2px solid rgba(240, 173, 78, 0.75);
+    }
+    .margin-right{
+        margin-right: 10%;
+    }
+</style>
+{% endblock %}
+{% block title %}Ver Presupuesto{% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-5 offset-md-1">
+        <div class="row align-items-start margin-bottom">
+            <div class="col-md-4 offset-md-3">
+                <p class="h1 text-primary">{{ object.nombre }}</p>
+            </div>
+        </div>
+        <div class="row align-items-center margin-bottom">
+            <div class="col-md-5 offset-md-1">
+                {% if object.icono %}
+                <img src="{{ object.icono.url }}" class="rounded" width="300">
+                {% else %}
+                <img src="{% static 'images/cuentaIcono.png' %}" class="rounded" width="300">
+                {% endif %}
+            </div>
+        </div>
+        <div class="row align-items-end margin-bottom">
+            <div class="col-md-5 offset-md-1">
+                <p class="h6 text-info">Saldo máximo: {{ object.saldoTotal }} {{ object.tipo_moneda }}</p>
+            </div>
+        </div>
+        <div class="row align-items-end margin-bottom">
+            <div class="col-md-5 offset-md-1">
+                <p class="h6 text-info">Saldo gastado: {{ object.saldoConsumido }} {{ object.tipo_moneda }}</p>
+            </div>
+        </div>
+        <div class="row align-items-end margin-bottom">
+            <div class="col-md-5 offset-md-1">
+                <p class="h6 text-info">Fecha Inicio: {{ object.fechaInicio }} </p>
+            </div>
+        </div>
+        <div class="row align-items-end margin-bottom">
+            <div class="col-md-5 offset-md-1">
+                <p class="h6 text-info">Duración: {{ object.duracion }} Meses</p>
+            </div>
+        </div>
+        <div class="row align-items-end margin-bottom">
+            <div class="col-md-5 offset-md-1">
+                <p class="h6 text-info">Cuentas Pertenecientes al Presupuesto:</p>
+                {% if object.cuentas %}
+                <ul class="list-group list-group-item-primary">
+                    {% for cuenta in object.cuentas.all %}
+                    {{ cuenta.nombre }}
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row align-items-end margin-bottom">
+            <div class="col-md-4 offset-md-3">
+                <a type="button" class="btn btn-warning"
+                    href="{% url 'presupuesto:modificarPresupuesto' object.id %}">Editar
+                    presupuesto</a>
+
+            </div>
+        </div>
+    </div>
+    <div class="col offset-md-1">
+        <div class="row">
+            <p class="h5">Progreso de tiempo: </p>
+        </div>
+
+        {% if porcentajeTiempo < 25 %}
+        <div class="progress margin-right">
+            <div class="progress-bar bg-success" role="progressbar" style="width: {{ porcentajeTiempo }}%" 
+            aria-valuenow="{{ porcentajeTiempo }}" aria-valuemin="0" aria-valuemax="100">{{ porcentajeTiempo }}%</div>
+        </div>
+        {% elif porcentajeTiempo < 50 %}
+        <div class="progress margin-right">
+            <div class="progress-bar bg-info" role="progressbar" style="width: {{ porcentajeTiempo }}%" 
+            aria-valuenow="{{ porcentajeTiempo }}" aria-valuemin="0" aria-valuemax="100">{{ porcentajeTiempo }}%</div>
+        </div>
+        {% elif porcentajeTiempo < 75 %}
+        <div class="progress margin-right">
+            <div class="progress-bar bg-warning" role="progressbar" style="width: {{ porcentajeTiempo }}%" 
+            aria-valuenow="{{ porcentajeTiempo }}" aria-valuemin="0" aria-valuemax="100">{{ porcentajeTiempo }}%</div>
+        </div>
+        {% else %}
+        <div class="progress margin-right">
+            <div class="progress-bar bg-danger" role="progressbar" style="width: {{ porcentajeTiempo }}%" 
+                aria-valuenow="{{ porcentajeTiempo }}" aria-valuemin="0" aria-valuemax="100">{{ porcentajeTiempo }}%</div>
+        </div>
+        {% endif %}
+
+        <div class="row">
+                <p class="h5">Progreso de dinero: </p>
+            </div>
+    
+            {% if porcentajeDinero < 25 %}
+            <div class="progress margin-right">
+                <div class="progress-bar bg-success" role="progressbar" style="width: {{ porcentajeDinero }}%" 
+                aria-valuenow="{{ porcentajeDinero }}" aria-valuemin="0" aria-valuemax="100">{{ porcentajeDinero }}%</div>
+            </div>
+            {% elif porcentajeDinero < 50 %}
+            <div class="progress margin-right">
+                <div class="progress-bar bg-info" role="progressbar" style="width: {{ porcentajeDinero }}%" 
+                aria-valuenow="{{ porcentajeDinero }}" aria-valuemin="0" aria-valuemax="100">{{ porcentajeDinero }}%</div>
+            </div>
+            {% elif porcentajeDinero < 75 %}
+            <div class="progress margin-right">
+                <div class="progress-bar bg-warning" role="progressbar" style="width: {{ porcentajeDinero }}%" 
+                aria-valuenow="{{ porcentajeDinero }}" aria-valuemin="0" aria-valuemax="100">{{ porcentajeDinero }}%</div>
+            </div>
+            {% else %}
+            <div class="progress margin-right">
+                <div class="progress-bar bg-danger" role="progressbar" style="width: {{ porcentajeDinero }}%" 
+                    aria-valuenow="{{ porcentajeDinero }}" aria-valuemin="0" aria-valuemax="100">{{ porcentajeDinero }}%</div>
+            </div>
+            {% endif %}
+
+
+        <div class="row margin-bottom">
+            <div class="col">
+                <p class="h1">Acciones</p>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col align-self-center">
+                <a class="btn btn-primary" href="{% url 'presupuesto:listarCuentaPresupuestosL' pk=object.id  %}">
+                    <p class="text-light inline2">Listar y/o Remover Cuentas</p>
+                </a>
+            </div>
+        </div>
+
+        <div class="row justify-content-md-center margin-bottom2">
+            <div class="col align-self-center">
+                <a type="button" class="btn btn-primary"
+                    href="{% url 'transacciones:crearTransaccionPresupuesto' cuenta=object.id %}">
+                    <p class="text-light inline2">Transferir a otro Presupuesto</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

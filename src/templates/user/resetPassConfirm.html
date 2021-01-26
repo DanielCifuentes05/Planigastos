@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block extrahead %}
+{% load static %}
+<script src="{% static 'js/validacionFormulario.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+<style>
+    .imagen {
+        background-image: url("{% static 'images/cambiarPass4.jpg' %}");
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background-repeat: no-repeat;
+        height: 92VH;
+        background-size: cover;
+    
+    }
+</style>
+{% endblock %}
+{% block title %}Cambiar Pass{% endblock %}
+{% block content %}
+<!-- <img src="{% static 'images/login2.jpg' %}" class="rounded float-right"  id = "imagen"> -->
+<div class="imagen">
+    <div class="row">
+
+        <div class="col-md-4 offset-md-4">
+            <div class="card">
+                <p class="h2">Cambiar Contraseña</p>
+                <form method="POST" id="padear">{% csrf_token %}
+                    <div class="form-group" id="margen">
+                        <h5>Nueva Contraseña</h5>
+
+                        <input class="form-control" type="password" name="new_password1">
+                    </div>
+
+                    <div class="form-group" id="margen">
+                        <h5>Repite la Nueva Contraseña</h5>
+
+                        <input class="form-control" type="password" name="new_password2">
+                    </div>
+
+                    <div class="form-group" id="boton">
+                        <input type="submit" class="btn btn-primary" value="Aceptar" />
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+    {% if form.errors %}
+    {% for field in form %}
+    {% for error in field.errors %}
+    {% if error != "This field is required." %}
+    <div class="alert alert-danger">
+        <strong>{{ error|escape }}</strong>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+    <div class="alert alert-danger">
+        <strong>{{ error|escape }}</strong>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+
+    {% endblock %}
+
+</div>

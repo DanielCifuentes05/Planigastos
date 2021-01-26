@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% block extrahead %}
+{% load static %}
+<script src="{% static 'js/validacionFormulario.js' %}"></script>
+<style>
+    #imagen{
+        width: 100%;
+
+        height: 100%;
+
+        object-fit: cover;
+        /* float: left; */
+    }
+</style>
+{% endblock %}
+{% block title %}Crear Usuario{% endblock %}
+{% block content %}
+
+<div class="row">
+
+    <div class="col-md-5 offset-md-1">
+        <form method="POST">{% csrf_token %}
+
+            <div class="form-group">
+                <label>Nombre</label>
+                <input class="form-control" type="text" name="first_name" value = "{{ form2.first_name.value }}">
+            </div>
+
+            <div class="form-group">
+                <label>Apellido</label>
+
+                <input class="form-control" type="text" name="last_name" value = "{{ form2.last_name.value }}">
+            </div>
+
+            <div class="form-group">
+                <label>Nombre de usuario</label>
+
+                <input class="form-control" type="text" name="username" value = "{{ form2.username.value }}">
+            </div>
+
+
+            <div class="form-group">
+                <label>Correo</label>
+                <input class="form-control" type="text" name="email" value = "{{ form2.email.value }}">
+            </div>
+
+
+            <div class="form-group">
+                <label>Fecha de nacimiento</label>
+                <input class="form-control" type="date" name="fecha_nacimiento" id="fechaNacimiento" value = "{{ form.fecha_nacimiento.value }}">
+            </div>
+
+
+            <div class="form-group">
+                <label>Cedula</label>
+                <input class="form-control" type="number" name="cedula" value = "{{ form.cedula.value }}">
+            </div>
+
+
+            <div class="form-group">
+                <label>Contraseña</label><br>
+                <small>La contraseña debe tener mínimo 8 caracteres y no debe ser totalmente numérica</small>
+                <input class="form-control" type="password" name="password1" placeholder = "Digita una contraseña segura">
+            </div>
+
+
+            <div class="form-group">
+                <label>Confirmar Contraseña</label>
+                <input class="form-control" type="password" name="password2">
+            </div>
+
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Aceptar" />
+            </div>
+
+        </form>
+    </div>
+    <div class = "col">
+        <img src="{% static 'images/crearCuenta.jpg' %}" class="rounded float-right"  id = "imagen">
+    </div>
+</div>
+
+
+</div>
+{% if form.errors %}
+{% for field in form %}
+{% for error in field.errors %}
+
+<div class="alert alert-danger">
+    <strong>{{field.name }}: {{ error|escape }}</strong>
+</div>
+
+{% endfor %}
+{% endfor %}
+{% for error in form.non_field_errors %}
+
+<div class="alert alert-danger">
+    <strong>{{field.name }}: {{ error|escape }}</strong>
+</div>
+
+{% endfor %}
+{% endif %}
+{% if form2.errors %}
+{% for field in form2 %}
+{% for error in field.errors %}
+
+<div class="alert alert-danger">
+    <strong>{{ field.name }}: {{ error|escape }}</strong>
+</div>
+
+{% endfor %}
+{% endfor %}
+{% for error in form2.non_field_errors %}
+
+<div class="alert alert-danger">
+    <strong>{{field.name }}: {{ error|escape }}</strong>
+</div>
+
+{% endfor %}
+{% endif %}
+
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extrahead %}
+<style>
+    .boton {
+        margin-right: 100px;
+    }
+
+    .mensaje {
+        margin-top: 40px;
+    }
+</style>
+{% endblock %}
+{% block title %}Remover Cuenta{% endblock %}
+{% block content %}
+
+<div class="row justify-content-md-center">
+    {% if object.icono %}
+    <img src="{{ object.icono.url }}" class="rounded" width="300" height="300">
+    {% else %}
+    <img src="{% static 'images/cuentaIcono.png' %}" class="rounded" width="300" height="300">
+    {% endif %}
+</div>
+<div class="row justify-content-md-center">
+    <div class="alert alert-warning mensaje" role="alert">
+        ¿Desea remover la cuenta {{ cuenta.nombre }} del grupo?
+    </div>
+</div>
+<div class="row justify-content-md-center">
+    <form method="POST">{% csrf_token %}
+        <button class="btn btn-danger boton" type="submit">Eliminar</button>
+        <a class="btn btn-primary" href="{% url 'cuentas:listarCuentasGrupo' idGrupo=grupo.id %}">Cancelar</a>
+    </form>
+</div>
+
+<br><br><br><br><br><br><br>
+{% endblock %}

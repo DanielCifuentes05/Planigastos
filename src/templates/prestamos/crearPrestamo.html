@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extrahead %}
+
+<style>
+    #imagen {
+        width: 100%;
+
+        height: 100%;
+
+        object-fit: cover;
+
+    }
+
+    .margin-bottom {
+        margin-bottom: 60px;
+    }
+
+    .margin-bottom2 {
+        margin-bottom: 40px;
+    }
+
+    .padding-left {
+        padding-left: 150px;
+    }
+</style>
+{% endblock %}
+{% block title %}Crear Prestamo{% endblock %}
+{% block content %}
+
+
+<div class="row">
+
+    <div class="col-md-5 offset-md-1">
+        <h4 class="margin-bottom">Crear cuenta de tarjeta de préstamo</h4>
+        <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+
+            <div class="form-group margin-bottom2">
+                <label>Nombre de la cuenta</label>
+                <input class="form-control" type="text" name="nombre">
+            </div>
+
+
+            <div class="form-group margin-bottom2">
+                <h5>Elige un ícono para tu cuenta</h5>
+                <input type="file" name="icono">
+            </div>
+
+            <div class="form-group">
+                <label>Moneda de la cuenta</label>
+                {{ form2.tipo_moneda }}
+                <!-- <input class="form-control" type="number" name="cedula"> -->
+            </div>
+            <div class="form-group margin-bottom2">
+                <label>Escribe el monto que has prestado</label>
+                <input class="form-control" type="text" name="montoNeto">
+            </div>
+            <div class=" form-group margin-bottom2">
+                <label>Escribe el número de meses en el que debes pagar </label>
+                <input class="form-control" type="text" name="mesesPago" placeholder="Entre 6 y 60 meses">
+                
+            </div>
+
+            <div class=" form-group margin-bottom2">
+                <label>Escribe el valor de la Tasa Anual Equivalente</label>
+                <input class="form-control" type="text" name="TAE" placeholder = "Escribe un valor entre 0 y 100">
+            </div>
+            <div class=" form-group padding-left">
+                <input type="submit" class="btn btn-primary" value="Aceptar" />
+            </div>
+
+        </form>
+    </div>
+    <div class = "col">
+        <img src="{% static 'images/crearTarjetaCredito.jpg' %}" class="rounded float-right" id="imagen">
+    </div>
+</div>
+
+
+</div>
+{% if form.errors %}
+{% for field in form %}
+{% for error in field.errors %}
+
+<div class="alert alert-danger">
+    <strong>{{field.name }}: {{ error|escape }}</strong>
+</div>
+
+{% endfor %}
+{% endfor %}
+{% for error in form.non_field_errors %}
+
+<div class="alert alert-danger">
+    <strong>{{field.name }}: {{ error|escape }}</strong>
+</div>
+
+{% endfor %}
+{% endif %}
+{% if form2.errors %}
+{% for field in form2 %}
+{% for error in field.errors %}
+
+<div class="alert alert-danger">
+    <strong>{{ field.name }}: {{ error|escape }}</strong>
+</div>
+
+{% endfor %}
+{% endfor %}
+{% for error in form2.non_field_errors %}
+
+<div class="alert alert-danger">
+    <strong>{{field.name }}: {{ error|escape }}</strong>
+</div>
+
+{% endfor %}
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,29 @@
+#imagen{
+    width: 50%;
+    height : 80%;
+    top: 15%;
+
+    left: 50%;
+    position: absolute;
+   
+}
+
+
+
+/* #margen{
+    margin-top: 20%;
+} */
+
+#boton{
+    margin-top: 70px;
+    text-align: center;
+}
+
+#padear{
+    padding: 40px;
+}
+
+#padear2{
+    text-align: center;
+    
+}

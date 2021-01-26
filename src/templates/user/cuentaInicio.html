@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extrahead %}
+<style>
+    .margin-top {
+        margin-top: 40px;
+    }
+</style>
+{% endblock %}
+{% block title %}Inicio{% endblock %}
+{% block content %}
+
+
+<div class="row margin-top">
+    <div class="col offset-md-2">
+
+        <figure>
+            <figcaption>Cuentas de Efectivo e Inversiones</figcaption>
+            <a href="{% url 'cuentas:listarCuentas' %}">
+                <img src="{%static 'images/pocket.png' %}" class="rounded-circle" width="180" , height="180">
+            </a>
+        </figure>
+
+    </div>
+    <div class="col ">
+        <figure>
+            <figcaption>Tarjetas de Crédito</figcaption>
+            <a href="{% url 'cuentas:listarTarjetas' %}">
+                <img src="{% static 'images/creditCard.png' %}" class="rounded-circle" width="180" , height="180">
+            </a>
+        </figure>
+    </div>
+    <div class="col">
+        <figure>
+            <figcaption>Cuenta de Ahorros</figcaption>
+            <a href="{% url 'cuentas:listarAhorros' %}">
+                <img src="{% static 'images/ahorros.png' %}" class="rounded-circle" width="180" , height="180">
+            </a>
+        </figure>
+    </div>
+</div>
+<div class="row margin-top">
+    <div class="col offset-md-2">
+
+        <figure>
+            <figcaption>Cuentas de Préstamo</figcaption>
+            <a href = "{% url 'cuentas:listarPrestamo' %}">
+                <img src="{%static 'images/prestamo.png' %}" class="rounded-circle" width="180" , height="180">
+            </a>
+        </figure>
+
+    </div>
+    <div class="col">
+        <figure>
+            <figcaption>Presupuestos</figcaption>
+            <a href="{% url 'presupuesto:listarPresupuestos' %}">
+                <img src="{% static 'images/marketing.png' %}" class="rounded-circle" width="180" , height="180">
+            </a>
+        </figure>
+    </div>
+    <div class="col">
+        <figure>
+            <figcaption>Administración del Perfil</figcaption>
+            <a href="{% url 'usuario:verPerfil' pk=usuario.id %}">
+                <img src="{% static 'images/iconoPerfil.png' %}" class="rounded-circle" width="180" , height="180">
+            </a>
+        </figure>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extrahead %}
+
+<style>
+    #imagen {
+        width: 100%;
+
+        height: 100%;
+
+        object-fit: cover;
+
+    }
+    .margin-bottom{
+        margin-bottom: 60px;
+    }
+
+    .margin-bottom2{
+        margin-bottom: 40px;
+    }
+    .padding-left{
+        padding-left: 150px;
+    }
+</style>
+{% endblock %}
+{% block title %}Modificar Grupo{% endblock %}
+{% block content %}
+
+
+<div class="row">
+
+    <div class="col-md-5 offset-md-1">
+        <h4 class = "margin-bottom">Modificar de Grupo</h4>
+        <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+
+            <div class="form-group margin-bottom2">
+                <label>Nombre</label>
+                <input class="form-control" type="text" name="nombre" value = "{{ form.nombre.value }}">
+            </div>
+
+
+            <div class = "form-group margin-bottom2">
+                <h5>Elige un ícono para tu cuenta</h5>
+                {% if form.icono.value %}
+                    <img src="{{ form.icono.value.url }}" width="70" height="70">
+                {% else %}
+                    <img src="{% static 'images/cuentaIcono.png' %}"  class = "rounded" width="70" height="70">
+                {% endif %}
+                <input  type="file" name="icono">
+            </div>
+            <h5>Elige nuevas cuentas que deseas agregar al grupo</h5>
+            <div class = "form-group margin-bottom2"  style="OVERFLOW-Y:scroll; height : 120px">
+                
+                {% for cuenta in form.cuentas %}
+                    <p>{{ cuenta }}</p>
+                {% endfor %}
+            </div>
+
+            <div class="form-group padding-left">
+                <input type="submit" class="btn btn-primary" value="Aceptar" />
+            </div>
+          
+        </form>
+    </div>
+    <div class = "col">
+        <img src="{% static 'images/crearGrupo.jpg' %}" class="rounded float-right"  id = "imagen">
+    </div>
+</div>
+
+
+</div>
+{% if form.errors %}
+{% for field in form %}
+{% for error in field.errors %}
+
+<div class="alert alert-danger">
+    <strong>{{field.name }}: {{ error|escape }}</strong>
+</div>
+
+{% endfor %}
+{% endfor %}
+{% for error in form.non_field_errors %}
+
+<div class="alert alert-danger">
+    <strong>{{field.name }}: {{ error|escape }}</strong>
+</div>
+
+{% endfor %}
+{% endif %}
+
+{% endblock %}

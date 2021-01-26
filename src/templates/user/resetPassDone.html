@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block extrahead %}
+{% load static %}
+<script src="{% static 'js/validacionFormulario.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+<style>
+    .marginb {
+        margin-bottom: 10%;
+    }
+    .hola{
+        height: 80VH;
+    }
+</style>
+{% endblock %}
+{% block title %}Restaurar Contraseña{% endblock %}
+{% block content %}
+<div class = "container hola">
+<div class="row justify-content-md-center marginb">
+    <p class="h1 text-info">Se ha enviado el correo de confirmación</p>
+</div>
+<div class="row align-items-center">
+    <p class="h4">
+        Si existe una cuenta asociada al correo que has escrito, revísalo para continuar con el proceso
+        de restauración de contraseña
+    </p>
+</div>
+</div>
+
+{% endblock %}

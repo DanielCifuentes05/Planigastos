@@ -1,0 +1,86 @@
+
+
+
+{% extends 'base.html' %}
+{% load static %}
+{% block extrahead %}
+
+<style>
+    #imagen {
+        width: 100%;
+
+        height: 100%;
+
+        object-fit: cover;
+
+    }
+    .margin-bottom{
+        margin-bottom: 60px;
+    }
+
+    .margin-bottom2{
+        margin-bottom: 40px;
+    }
+    .padding-left{
+        padding-left: 150px;
+    }
+</style>
+{% endblock %}
+{% block title %}Transaccion Presupuesto{% endblock %}
+{% block content %}
+
+
+<div class="row">
+
+    <div class="col-md-5 offset-md-1">
+        <h4 class = "margin-bottom">Realizar Transacción a otro Presupuesto</h4>
+        <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+
+            <div class="form-group margin-bottom2">
+                <label>Digita el valor de la transacción</label>
+                <input class="form-control" type="number" name="valor" >
+            </div>
+
+
+            <div class = "form-group margin-bottom2">
+                <h5>Elige el presupuesto al que deseas realizar la transacción</h5>
+                {{ form.presupuestoDestino }}
+            </div>
+
+            <div class="form-group">
+                <h5>Moneda en que deseas realizar la transacción</h5>
+                {{ form.tipo_moneda }}
+            </div>
+            <div class="form-group padding-left">
+                <input type="submit" class="btn btn-primary" value="Aceptar" />
+            </div>
+          
+        </form>
+    </div>
+    <div  class = "col">
+        <img src="{% static 'images/transaccionPresupuesto.jpg' %}" class="rounded float-right"  id = "imagen">
+    </div>
+</div>
+
+
+</div>
+{% if form.errors %}
+{% for field in form %}
+{% for error in field.errors %}
+
+<div class="alert alert-danger">
+    <strong>{{field.name }}: {{ error|escape }}</strong>
+</div>
+
+{% endfor %}
+{% endfor %}
+{% for error in form.non_field_errors %}
+
+<div class="alert alert-danger">
+    <strong>{{field.name }}: {{ error|escape }}</strong>
+</div>
+
+{% endfor %}
+{% endif %}
+
+{% endblock %}

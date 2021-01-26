@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extrahead %}
+<style>
+    .margin-bottom {
+        margin-bottom: 60px;
+    }
+
+    .margin-bottom2 {
+        margin-bottom: 100px;
+    }
+
+
+    .btn-primary:hover {
+        color: #FFF;
+        background: rgba(58, 133, 191, 0.75);
+        border: 2px solid rgba(58, 133, 191, 0.75);
+    }
+
+    .btn-warning:hover {
+        color: #FFF;
+        background: rgb(240, 173, 78, 0.75);
+        border: 2px solid rgba(240, 173, 78, 0.75);
+    }
+</style>
+{% endblock %}
+{% block title %}Ver Prestamo{% endblock %}
+{% block content %}
+
+
+<div class="row">
+    <div class="col-md-5 offset-md-1">
+        <div class="row align-items-start margin-bottom">
+            <div class="col-md-4 offset-md-3">
+                <p class="h1 text-primary">{{ cuentaPrestamo.cuenta.nombre }}</p>
+            </div>
+        </div>
+        <div class="row align-items-center margin-bottom">
+            <div class="col-md-5 offset-md-1">
+                {% if cuentaPrestamo.cuenta.icono %}
+                    <img src="{{ cuentaPrestamo.cuenta.icono.url }}" class="rounded" width="300">
+                {% else %}
+                    <img src="{% static 'images/cuentaIcono.png' %}" class="rounded" width="300">
+                {% endif %}
+            </div>
+        </div>
+        <div class="row align-items-end margin-bottom">
+            <div class="col-md-10">
+                <ul class="list-group">
+                    <li class="list-group-item">Monto sin interes: {{ cuentaPrestamo.montoNeto }} {{ cuentaPrestamo.cuenta.tipo_moneda }}</li>
+                    <li class="list-group-item">Monto con interes: {{ cuentaPrestamo.montoInteres }} {{ cuentaPrestamo.cuenta.tipo_moneda }}</li>
+                    <li class="list-group-item">TAE: {{ cuentaPrestamo.TAE }} %</li>
+                    <li class="list-group-item">Interes Nominal: {{ cuentaPrestamo.interesNominal }}</li>
+                    <li class="list-group-item">Total de meses: {{ cuentaPrestamo.mesesPago }}</li>
+                    <li class="list-group-item">Meses Pagados: {{ cuentaPrestamo.mesesPagados }}</li>
+                    <li class="list-group-item">Saldo pendiente: {{ cuentaPrestamo.saldoPendiente }} {{ cuentaPrestamo.cuenta.tipo_moneda }}</li>
+                    <li class="list-group-item">Pagos mensuales de: {{ cuentaPrestamo.pagoMensual }} {{ cuentaPrestamo.cuenta.tipo_moneda }}</li>
+                </ul>
+            </div>
+        </div>
+        <!-- <div class="row align-items-end margin-bottom">
+        <div class="col-md-4 offset-md-3">
+            <a type="button" class="btn btn-warning" href="#">Editar
+                valores del prestamo</a>
+
+        </div>
+    </div> -->
+    </div>
+    <div class="col offset-md-1">
+        <div class="row margin-bottom">
+            <div class="col">
+                <p class="h1">Acciones</p>
+            </div>
+        </div>
+
+        <div class="row justify-content-center margin-bottom">
+            <div class="col align-self-center">
+                <a type="button" class="btn btn-primary" href = "{% url 'cuentas:exportarPrestamo' pk=cuentaPrestamo.id %}">
+                    <p class="text-light inline2">Exportar cuenta</p>
+                </a>
+            </div>
+        </div>
+
+
+        <div class="row justify-content-md-center margin-bottom2">
+            <div class="col align-self-center">
+                <a type="button" class="btn btn-primary" href="{% url 'cuentas:pagarMes' pk=cuentaPrestamo.id%}">
+                    <p class="text-light inline2">Pagar mes</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+    {% endblock %}

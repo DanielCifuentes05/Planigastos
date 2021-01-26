@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extrahead %}
+
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<style>
+    .space-top {
+        margin-top: 70px;
+    }
+</style>
+{% endblock %}
+{% block title %}Listar Cuentas{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row justify-content-md-center">
+        <h1>Cuentas pertenecientes a {{ grupo.nombre }}</h1><br>
+
+    </div>
+    <div class="row justify-content-md-center">
+        <h3>Balance del grupo: {{ grupo.balance }} {{ grupo.tipo_moneda }}</h3>
+    </div>
+</div>
+<div class="col offset-md-1">
+    <a type="button" class="btn btn-success" href="{% url 'grupos:modificarGrupo' pk=grupo.id %}">
+        Modificar Grupo
+    </a>
+</div>
+
+{% if object_list %}
+
+{% for item in object_list %}
+<div class="container">
+    <div class="row space-top">
+        {% if item.cuenta.icono %}
+        <img src="{{ item.cuenta.icono.url }}" class="rounded" width="70" height="70">
+        {% else %}
+        <img src="{% static 'images/cuentaIcono.png' %}" class="rounded" width="70" height="70">
+        {% endif %}
+        <div class="col-sm-8">
+            <h4>{{ item.cuenta.nombre }}</h4>
+            <p class="h6">Saldo: {{ item.saldo_inicial }} {{ item.cuenta.tipo_moneda }}</p>
+        </div>
+
+        <div class="col">
+            <a type="button" class="btn btn-danger"
+                href="{% url 'grupos:removerCuenta' idCuenta=item.cuenta.id idGrupo=grupo.id saldo=item.saldo_inicial %}">
+                Remover cuenta
+            </a>
+        </div>
+    </div>
+</div>
+
+
+
+{% endfor %}
+
+{% else %}
+<h1>No existen registros de cuentas</h1>
+{% endif %}
+
+<ul class="pager">
+    <li>
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+        {% endif %}
+    </li>
+    <li>
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+        {% endif %}
+    </li>
+</ul>
+{% endblock %}

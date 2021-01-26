@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extrahead %}
+
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<style>
+    .space-top {
+        margin-top: 70px;
+    }
+</style>
+{% endblock %}
+{% block title %}Listar Presupuestos{% endblock %}
+{% block content %}
+<div class  = "row">
+    <div class = "col offset-md-1">
+        <a type="button" class="btn btn-primary" href="{% url 'presupuesto:crearPresupuesto' %}">Crear nuevo presupuesto</a>
+    </div>
+</div>
+{% if object_list %}
+
+{% for item in object_list %}
+<div class="container">
+    <div class="row space-top">
+        {% if item.icono %}
+            <img src="{{ item.icono.url }}"  class = "rounded" width="70" height="70">
+        {% else %}
+            <img src="{% static 'images/cuentaIcono.png' %}"  class = "rounded" width="70" height="70">
+        {% endif %}
+        <div class="col-sm-8">
+            <h4>
+                <a href = "{% url 'presupuesto:verPresupuesto' pk=item.id %}">
+                    {{ item.nombre }}
+                </a>
+            </h4> 
+            <i>Saldo Total: {{ item.saldoTotal }} {{ item.tipo_moneda }}</i>
+        </div>
+
+        <div class="col">      
+            <a type="button" class="btn btn-danger" href = "{% url 'presupuesto:eliminarPresupuesto' pk=item.id %}">Eliminar presupuesto</a>
+        </div>
+    </div>
+</div>
+
+
+
+{% endfor %}
+
+{% else %}
+<h1>No existen registros de presupuestos</h1>
+{% endif %}
+
+<ul class="pager">
+    <li>
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+        {% endif %}
+    </li>
+    <li>
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+        {% endif %}
+    </li>
+</ul>
+{% endblock %}
